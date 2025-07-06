@@ -93,11 +93,13 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
         setMoodNote('');
     };
 
+    /*
     const getTodayMoodDisplay = () => {
         if (!todayMoodTracker) return null;
         const moodOption = moodOptions.find((m) => m.value === todayMoodTracker.mood);
         return moodOption ? `${moodOption.emoji} ${moodOption.label}` : todayMoodTracker.mood;
     };
+    */
 
     console.log('User data:', user);
     console.log('Today mood tracker:', todayMoodTracker);

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique(); // Unique slug for SEO-friendly URLs
+            $table->string('mood')->nullable(); // Mood associated with the journal entry
+            $table->integer('word_count')->default(0); // Word count for the entry
             $table->text('content')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes(); // For soft deletion

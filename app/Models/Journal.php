@@ -14,7 +14,9 @@ class Journal extends Model
         'title',
         'slug',
         'content',
-        'user_id', // Foreign key to the user
+        'mood',
+        'word_count',
+        'user_id',
     ];
 
     protected static function boot()
@@ -28,7 +30,7 @@ class Journal extends Model
         });
 
         static::updating(function ($journal) {
-            if ($journal->isDirty('title') && empty($journal->slug)) {
+            if ($journal->isDirty('title')) {
                 $journal->slug = $journal->generateUniqueSlug($journal->title);
             }
         });
@@ -40,6 +42,25 @@ class Journal extends Model
     }
 
     /**
+     * Get excerpt of content
+     */
+    public function getExcerptAttribute($maxLength = 150)
+    {
+        if (strlen($this->content) <= $maxLength) {
+            return $this->content;
+        }
+        return substr($this->content, 0, $maxLength) . '...';
+    }
+
+    /**
+     * Get reading time in minutes
+     */
+    public function getReadingTimeAttribute()
+    {
+        return max(1, ceil($this->word_count / 200));
+    }
+
+    /**
      * Generate unique slug from title
      */
     private function generateUniqueSlug($title)
@@ -47,7 +68,8 @@ class Journal extends Model
         $slug = Str::slug($title);
         $originalSlug = $slug;
         $counter = 1;
-        while (static::where('slug', $slug)->exists()) {
+
+        while (static::where('slug', $slug)->where('id', '!=', $this->id ?? 0)->exists()) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
