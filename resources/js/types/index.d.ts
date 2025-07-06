@@ -39,5 +39,58 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    mood_trackers: MoodTracker[];
+    user_courses?: Course[];
+    userBadgesWithProgress?: UserBadgeWithProgress[];
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Course {
+    id: number;
+    title: string;
+    description: string;
+    slug: string;
+    thumbnail: string;
+    tags: string[]; // Store tags as an array
+    what_you_will_learn: string[]; // Store learning outcomes as an array
+    time_to_complete: number; // Time in minutes
+    course_category_id: number; // Foreign key to the course category
+    level: string; // e.g., beginner, intermediate, advanced
+    created_at: string;
+    updated_at: string;
+    modules: Module[];
+}
+
+export interface Module {
+    id: number;
+    title: string;
+    slug: string;
+    content_type: string;
+    content_url: string;
+    course_id: number;
+    created_at: string;
+    updated_at: string;
+    quizzes: Quiz[];
+    // lessons?: Lesson[];
+}
+
+export interface Quiz {
+    id: number;
+    question: string;
+    option_a: string; // Option A
+    option_b: string; // Option B
+    option_c: string; // Option C
+    option_d: string; // Option D
+    correct_answer: string; // Store the correct answer
+    module_id: number; // Foreign key to the module
+}
+
+export interface MoodTracker {
+    id: number;
+    mood: string; // e.g., happy, sad, neutral
+    note: string; // Optional note
+    tracked_at: string; // Date and time of the mood tracking
+    created_at: string;
+    updated_at: string;
+    user_id: number; // Foreign key to the user
 }

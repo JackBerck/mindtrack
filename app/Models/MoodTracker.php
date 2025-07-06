@@ -9,7 +9,7 @@ class MoodTracker extends Model
     protected $fillable = [
         'user_id',
         'mood',
-        'notes',
+        'note',
         'tracked_at',
     ];
 

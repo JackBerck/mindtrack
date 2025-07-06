@@ -61,4 +61,64 @@ class User extends Authenticatable
     {
         return $this->hasMany(MoodTracker::class);
     }
+
+    /**
+     * Get the courses for the user.
+     */
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'user_courses')
+            ->withTimestamps()
+            ->withPivot('progress', 'is_completed');
+    }
+
+    /**
+     * Get the badges for the user.
+     */
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class, 'user_badges')
+            ->withTimestamps()
+            ->withPivot('achieved_at');
+    }
+
+    public function userBadges()
+    {
+        return $this->hasMany(UserBadge::class);
+    }
+
+    public function hasBadges($badgeId)
+    {
+        return $this->badges()->where('badge_id', $badgeId)->exists();
+    }
+
+    public function awardBadge($badgeId)
+    {
+        if (!$this->userBadges($badgeId)) {
+            $this->badges()->attach($badgeId, ['achieved_at' => now()]);
+            return true; // Badge awarded successfully
+        }
+
+        return false; // Badge already awarded
+    }
+
+    /**
+     * Get the user courses with progress.
+     */
+    public function userCourses()
+    {
+        return $this->hasMany(UserCourse::class)
+            ->with('course')
+            ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the user badges with progress.
+     */
+    public function userBadgesWithProgress()
+    {
+        return $this->hasMany(UserBadge::class)
+            ->with('badge')
+            ->orderBy('achieved_at', 'desc');
+    }
 }

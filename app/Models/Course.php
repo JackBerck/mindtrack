@@ -15,6 +15,16 @@ class Course extends Model
         'description',
         'slug',
         'thumbnail',
+        'tags',
+        'what_you_will_learn',
+        'time_to_complete',
+        'course_category_id',
+        'level',
+    ];
+
+    protected $casts = [
+        'tags' => 'array', // Store tags as an array
+        'what_you_will_learn' => 'array', // Store learning outcomes as an array
     ];
 
     protected static function boot()
@@ -37,6 +47,11 @@ class Course extends Model
     public function modules()
     {
         return $this->hasMany(Module::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(CourseCategory::class);
     }
 
     /**
