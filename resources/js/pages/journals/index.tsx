@@ -281,7 +281,7 @@ export default function JournalIndex({ journals, stats, filters }: Props) {
                                         <CardContent className="p-6">
                                             <div className="mb-4 flex items-start justify-between">
                                                 <div className="min-w-0 flex-1">
-                                                    <Link href={`/journals/${journal.slug}`}>
+                                                    <Link href={`/journal/${journal.slug}`}>
                                                         <h3 className="mb-2 cursor-pointer text-xl font-semibold text-slate-800 transition-colors group-hover:text-rose-600">
                                                             {journal.title}
                                                         </h3>
@@ -322,7 +322,7 @@ export default function JournalIndex({ journals, stats, filters }: Props) {
                                                         </DropdownMenuTrigger>
                                                         <DropdownMenuContent>
                                                             <DropdownMenuItem asChild>
-                                                                <Link href={`/journals/${journal.id}/edit`}>
+                                                                <Link href={`/journal/${journal.id}/edit`}>
                                                                     <Edit className="mr-2 h-4 w-4" />
                                                                     Edit
                                                                 </Link>
@@ -363,7 +363,7 @@ export default function JournalIndex({ journals, stats, filters }: Props) {
                                                 </div>
                                             </div>
 
-                                            <Link href={`/journals/${journal.slug}`}>
+                                            <Link href={`/journal/${journal.slug}`}>
                                                 <p className="cursor-pointer leading-relaxed text-slate-700 transition-colors group-hover:text-slate-800">
                                                     {getExcerpt(journal.content)}
                                                 </p>
@@ -381,7 +381,7 @@ export default function JournalIndex({ journals, stats, filters }: Props) {
                                                         size="sm"
                                                         className="text-rose-600 hover:bg-rose-50 hover:text-rose-700"
                                                     >
-                                                        <Link href={`/journals/${journal.slug}`}>Baca Selengkapnya →</Link>
+                                                        <Link href={`/journal/${journal.slug}`}>Baca Selengkapnya →</Link>
                                                     </Button>
                                                 </div>
                                             </div>

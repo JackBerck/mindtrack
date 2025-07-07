@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { Course, User, type BreadcrumbItem } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { Award, BookOpen, Brain, CheckCircle, Clock, Heart, Play, Star, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -168,42 +168,43 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
                                     {!user.user_courses || user.user_courses?.length === 0 ? (
                                         <p className="text-center text-slate-600">Kamu belum mengikuti course apapun. Mulai belajar sekarang!</p>
                                     ) : (
-                                        user.user_courses?.map((course) => (
-                                            <div key={course.id} className="flex gap-4 rounded-lg bg-slate-50 p-4">
-                                                <img
-                                                    src={course.thumbnail || '/placeholder.svg'}
-                                                    alt={course.title}
-                                                    className="h-14 w-20 rounded-lg object-cover"
-                                                />
-                                                <div className="min-w-0 flex-1">
-                                                    <div className="mb-2 flex flex-wrap items-start justify-between">
-                                                        <div>
-                                                            <h3 className="truncate font-semibold text-slate-800">{course.title}</h3>
-                                                            <p className="line-clamp-2 text-sm text-slate-600">
-                                                                {course.description || 'Deskripsi course belum tersedia.'}
-                                                            </p>
-                                                            <div className="flex items-center gap-2 text-sm text-slate-600">
-                                                                <Badge variant="secondary" className="text-xs">
-                                                                    {course.course_category_id}
-                                                                </Badge>
-                                                                <span className="flex items-center gap-1">
-                                                                    <Clock className="h-3 w-3" />
-                                                                    {course.time_to_complete}
-                                                                </span>
+                                        <>
+                                            {user.user_courses?.map((course) => (
+                                                <div key={course.id} className="flex gap-4 rounded-lg bg-slate-50 p-4">
+                                                    <img
+                                                        src={course.thumbnail || '/placeholder.svg'}
+                                                        alt={course.title}
+                                                        className="h-14 w-20 rounded-lg object-cover"
+                                                    />
+                                                    <div className="min-w-0 flex-1">
+                                                        <div className="mb-2 flex flex-wrap items-start justify-between">
+                                                            <div>
+                                                                <h3 className="truncate font-semibold text-slate-800">{course.title}</h3>
+                                                                <p className="line-clamp-2 text-sm text-slate-600">
+                                                                    {course.description || 'Deskripsi course belum tersedia.'}
+                                                                </p>
+                                                                <div className="flex items-center gap-2 text-sm text-slate-600">
+                                                                    <Badge variant="secondary" className="text-xs">
+                                                                        {course.course_category_id}
+                                                                    </Badge>
+                                                                    <span className="flex items-center gap-1">
+                                                                        <Clock className="h-3 w-3" />
+                                                                        {course.time_to_complete}
+                                                                    </span>
+                                                                </div>
                                                             </div>
+                                                            <Button asChild size="sm" className="bg-emerald-500 hover:bg-emerald-600">
+                                                                <Link href={`/courses/${course.slug}`}>Lanjut</Link>
+                                                            </Button>
                                                         </div>
-                                                        <Button asChild size="sm" className="bg-emerald-500 hover:bg-emerald-600">
-                                                            <a href={`/courses/${course.slug}`}>Lanjut</a>
-                                                        </Button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))
+                                            ))}
+                                            <Button asChild variant="outline" className="w-full bg-transparent">
+                                                <Link href="/courses">Lihat Semua Course</Link>
+                                            </Button>
+                                        </>
                                     )}
-
-                                    <Button asChild variant="outline" className="w-full bg-transparent">
-                                        <a href="/courses">Lihat Semua Course</a>
-                                    </Button>
                                 </CardContent>
                             </Card>
 
@@ -217,10 +218,10 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
                                     <CardDescription>Course yang mungkin kamu suka</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="grid gap-4 md:grid-cols-2">
+                                    <div className="grid gap-4 md:grid-cols-2 space-y-4">
                                         {courses.map((course) => (
                                             <div key={course.id} className="group cursor-pointer">
-                                                <a href={`/courses/${course.slug}`}>
+                                                <Link href={`/courses/${course.slug}`}>
                                                     <div className="rounded-lg bg-slate-50 p-4 transition-colors group-hover:bg-slate-100">
                                                         <img
                                                             src="/img/placeholder.svg"
@@ -246,10 +247,14 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
                                                             <span>100+ siswa</span>
                                                         </div>
                                                     </div>
-                                                </a>
+                                                </Link>
                                             </div>
                                         ))}
                                     </div>
+
+                                    <Button asChild variant="outline" className="w-full bg-transparent">
+                                        <Link href="/courses">Lihat Semua Course</Link>
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </div>
@@ -284,7 +289,7 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
                                                     Update Mood
                                                 </Button>
                                                 <Button asChild variant="outline" size="sm">
-                                                    <a href="/mood-tracker">Lihat Riwayat</a>
+                                                    <Link href="/mood-tracker">Lihat Riwayat</Link>
                                                 </Button>
                                             </div>
                                         </div>
@@ -348,22 +353,22 @@ export default function Dashboard({ courses, user }: { courses: Course[]; user: 
                                 </CardHeader>
                                 <CardContent className="space-y-3">
                                     <Button asChild variant="outline" className="w-full justify-start bg-transparent">
-                                        <a href="/mood-tracker">
+                                        <Link href="/mood-tracker">
                                             <Heart className="mr-2 h-4 w-4" />
                                             Mood Tracker
-                                        </a>
+                                        </Link>
                                     </Button>
                                     <Button asChild variant="outline" className="w-full justify-start bg-transparent">
-                                        <a href="/journal">
+                                        <Link href="/journal">
                                             <BookOpen className="mr-2 h-4 w-4" />
                                             Tulis Journal
-                                        </a>
+                                        </Link>
                                     </Button>
                                     <Button asChild variant="outline" className="w-full justify-start bg-transparent">
-                                        <a href="/assessment">
+                                        <Link href="/assessment">
                                             <Brain className="mr-2 h-4 w-4" />
                                             Self Assessment
-                                        </a>
+                                        </Link>
                                     </Button>
                                 </CardContent>
                             </Card>

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use function Termwind\render;
+
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
@@ -18,8 +20,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Mood Tracker Routes
     Route::get('/mood-tracker', [App\Http\Controllers\MoodTrackerController::class, 'index'])->name('mood-tracker.index');
+    Route::get('/mood-tracker/analytics', [App\Http\Controllers\MoodTrackerController::class, 'analytics'])->name('mood-tracker.analytics');
+    Route::get('/mood-tracker/create', [App\Http\Controllers\MoodTrackerController::class, 'create'])->name('mood-tracker.create');
     Route::post('/mood-tracker', [App\Http\Controllers\MoodTrackerController::class, 'store'])->name('mood-tracker.store');
-    Route::get('/api/mood-analytics', [App\Http\Controllers\MoodTrackerController::class, 'analytics'])->name('mood-tracker.analytics');
+    Route::get('/mood-tracker/{moodTracker}', [App\Http\Controllers\MoodTrackerController::class, 'show'])
+    ->where('moodTracker', '[0-9]+')
+    ->name('mood-tracker.show');
+    Route::get('/mood-tracker/{moodTracker}/edit', [App\Http\Controllers\MoodTrackerController::class, 'edit'])->name('mood-tracker.edit');
+    Route::put('/mood-tracker/{moodTracker}/edit', [App\Http\Controllers\MoodTrackerController::class, 'update'])->name('mood-tracker.update');
+    Route::delete('/mood-tracker/{moodTracker}', [App\Http\Controllers\MoodTrackerController::class, 'destroy'])->name('mood-tracker.destroy');
 
     // Journal Routes
     Route::get('/journal', [App\Http\Controllers\JournalController::class, 'index'])->name('journal.index');

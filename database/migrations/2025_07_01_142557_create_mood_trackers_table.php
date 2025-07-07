@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('mood'); // Mood type (e.g., happy, sad, anxious)
             $table->text('note')->nullable(); // Optional description of the mood
+            $table->integer('intensity'); // Mood intensity (1-5)
+            $table->json('triggers')->nullable(); // JSON array of triggers (e.g stressors, events)
             $table->date('tracked_at')->default(now()); // Date of the mood entry
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
