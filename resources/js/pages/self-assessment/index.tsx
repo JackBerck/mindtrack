@@ -7,19 +7,10 @@ import AppLayout from '@/layouts/app-layout';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { id } from 'date-fns/locale';
 
-import { Assessment, SelfAssessmentCategory } from '@/types';
+import { Assessment, RecentResult, SelfAssessmentCategory } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Award, Brain, ChevronRight, Clock, Heart, Moon, Search, Star, TrendingUp, Users, Zap } from 'lucide-react';
 import { useState } from 'react';
-
-interface RecentResult {
-    id: number;
-    title: string;
-    score: number;
-    category: string;
-    date: string;
-    color: string;
-}
 
 interface Stats {
     total: number;
@@ -35,7 +26,7 @@ interface Props {
     stats: Stats;
 }
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.FC<{ className?: string }>> = {
     brain: Brain,
     heart: Heart,
     zap: Zap,
@@ -52,7 +43,7 @@ export default function SelfAssessmentsPage({ assessments, categories, recentRes
 
     const breadcrumbs = [
         { title: 'Dashboard', href: '/dashboard' },
-        { title: 'Mood Tracker', href: '/mood-tracker' },
+        { title: 'Self Assessments', href: '/self-assessments' },
     ];
 
     const icons = [
@@ -97,7 +88,7 @@ export default function SelfAssessmentsPage({ assessments, categories, recentRes
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Mood Tracker" />
+            <Head title="Self Assessments" />
             <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
                 <div className="container mx-auto px-4 py-8">
                     {/* Stats Cards */}
@@ -183,8 +174,6 @@ export default function SelfAssessmentsPage({ assessments, categories, recentRes
                                     const randomIconIndex = Math.floor(Math.random() * icons.length);
                                     const { icon: randomIconKey, gradient } = icons[randomIconIndex];
                                     const IconComponent = iconMap[randomIconKey] || Brain;
-
-                                    console.log(assessment.category?.name);
 
                                     return (
                                         <Card key={assessment.id} className="group border-0 shadow-md transition-all duration-300 hover:shadow-lg">

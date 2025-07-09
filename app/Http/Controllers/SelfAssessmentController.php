@@ -42,7 +42,6 @@ class SelfAssessmentController extends Controller
 
     public function show(SelfAssessment $assessment)
     {
-        // Pastikan eager load relasi
         $assessment->load(['category', 'questions']);
 
         // Format pertanyaan untuk frontend
@@ -109,5 +108,18 @@ class SelfAssessmentController extends Controller
         ]);
 
         return redirect()->route('self-assessments.index')->with('success', 'Hasil assessment berhasil disimpan.');
+    }
+
+    public function history(Request $request)
+    {
+        $results = $request->user()->assessmentResults()
+            ->with('assessment.category')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        
+
+        return Inertia::render('self-assessment/history/index', [
+            'results' => $results,
+        ]);
     }
 }

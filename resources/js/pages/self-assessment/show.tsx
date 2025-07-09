@@ -3,7 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Head, Link, useForm } from '@inertiajs/react';
+import AppLayout from '@/layouts/app-layout';
+import { Head, useForm } from '@inertiajs/react';
 import { AlertCircle, Brain, CheckCircle, ChevronLeft, ChevronRight, Clock, Lightbulb } from 'lucide-react';
 import { FormEventHandler, useEffect, useState } from 'react';
 
@@ -30,6 +31,12 @@ interface Props {
 }
 
 export default function AssessmentShowPage({ assessment }: Props) {
+    const breadcrumbs = [
+        { title: 'Dashboard', href: '/dashboard' },
+        { title: 'Self Assessments', href: '/self-assessments' },
+        { title: assessment.title, href: `/self-assessments/${assessment.slug}` },
+    ];
+
     const [currentStep, setCurrentStep] = useState<'intro' | 'questions' | 'complete'>('intro');
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [startTime, setStartTime] = useState<Date | null>(null);
@@ -101,13 +108,13 @@ export default function AssessmentShowPage({ assessment }: Props) {
     // Introduction Step
     if (currentStep === 'intro') {
         return (
-            <>
+            <AppLayout breadcrumbs={breadcrumbs}>
                 <Head title={assessment.title} />
                 <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
                     <div className="container mx-auto px-4 py-8">
                         <div className="mx-auto">
                             {/* Header */}
-                            <div className="mb-8 text-center">
+                            {/* <div className="mb-8 text-center">
                                 <Link href="/self-assessments">
                                     <Button variant="ghost" className="mb-4">
                                         <ChevronLeft className="mr-2 h-4 w-4" />
@@ -119,7 +126,7 @@ export default function AssessmentShowPage({ assessment }: Props) {
                                 </div>
                                 <h1 className="mb-2 text-3xl font-bold text-gray-900">{assessment.title}</h1>
                                 <p className="text-lg text-gray-600">{assessment.description}</p>
-                            </div>
+                            </div> */}
                             <Card className="mb-8">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
@@ -187,13 +194,13 @@ export default function AssessmentShowPage({ assessment }: Props) {
                         </div>
                     </div>
                 </div>
-            </>
+            </AppLayout>
         );
     }
 
     // Questions Step
     return (
-        <>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={assessment.title} />
             <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
                 <div className="container mx-auto px-4 py-8">
@@ -311,6 +318,6 @@ export default function AssessmentShowPage({ assessment }: Props) {
                     </div>
                 </div>
             </div>
-        </>
+        </AppLayout>
     );
 }

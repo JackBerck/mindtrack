@@ -46,6 +46,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/journal/{journal:slug}', [App\Http\Controllers\JournalController::class, 'destroy'])->name('journal.destroy');
 
     // Self-Assessment Routes
+    Route::get('/self-assessments/history', [App\Http\Controllers\SelfAssessmentController::class, 'history'])->name('self-assessments.history');
+    Route::get('/self-assessments/history-temp', function () {
+        return Inertia::render('self-assessment/history/index-temp');
+    })->name('self-assessments.history-temp');
     Route::get('/self-assessments', [App\Http\Controllers\SelfAssessmentController::class, 'index'])->name('self-assessments.index');
     Route::get('/self-assessments/{assessment:slug}', [App\Http\Controllers\SelfAssessmentController::class, 'show'])
         ->name('self-assessments.show')

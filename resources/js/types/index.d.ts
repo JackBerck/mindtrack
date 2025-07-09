@@ -113,7 +113,7 @@ export interface Assessment {
     description: string;
     difficulty: string;
     tags: string[];
-    category: SelfAssessmentCategory[];
+    category: SelfAssessmentCategory;
     icon: string;
     color: string;
     gradient: string;
@@ -121,6 +121,7 @@ export interface Assessment {
     questions: number;
     completions: number;
     rating: number;
+
 }
 
 export interface SelfAssessmentCategory {
@@ -128,4 +129,16 @@ export interface SelfAssessmentCategory {
     name: string;
     slug: string;
     self_assessments_count?: number;
+}
+
+interface RecentResult {
+    id: number;
+    result: string;
+    score: number;
+    taken_at: string;
+    user_id: number;
+    assessment_id: number;
+    created_at: string;
+    updated_at: string;
+    assessment: Assessment;
 }
