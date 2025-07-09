@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Album, BookOpen, Folder, Laugh, LayoutGrid } from 'lucide-react';
+import { Album, BookOpen, Brain, Folder, Laugh, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -17,6 +17,11 @@ const mainNavItems: NavItem[] = [
         title: 'Courses',
         href: '/courses',
         icon: BookOpen,
+    },
+    {
+        title: "Self Assessments",
+        href: '/self-assessments',
+        icon: Brain,
     },
     {
         title: 'Mood Tracker',

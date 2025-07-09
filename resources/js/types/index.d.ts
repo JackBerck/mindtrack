@@ -105,3 +105,27 @@ export interface Journal {
     created_at: string;
     updated_at: string;
 }
+
+export interface Assessment {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    difficulty: string;
+    tags: string[];
+    category: SelfAssessmentCategory[];
+    icon: string;
+    color: string;
+    gradient: string;
+    duration: string;
+    questions: number;
+    completions: number;
+    rating: number;
+}
+
+export interface SelfAssessmentCategory {
+    id: number;
+    name: string;
+    slug: string;
+    self_assessments_count?: number;
+}

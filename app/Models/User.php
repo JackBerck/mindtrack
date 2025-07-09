@@ -121,4 +121,12 @@ class User extends Authenticatable
             ->with('badge')
             ->orderBy('achieved_at', 'desc');
     }
+
+    /**
+     * Get the assessment results for the user.
+     */
+    public function assessmentResults()
+    {
+        return $this->hasMany(AssessmentResult::class);
+    }
 }

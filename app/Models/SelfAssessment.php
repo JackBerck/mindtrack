@@ -14,6 +14,18 @@ class SelfAssessment extends Model
         'title',
         'slug',
         'description',
+        'difficulty', // Difficulty level (e.g., easy, medium, hard)
+        'tags', // JSON array of tags
+        'self_assessment_category_id', // Foreign key to SelfAssessmentCategory
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'tags' => 'array', // Cast tags to array for JSON storage
     ];
     
     protected static function boot()
@@ -39,6 +51,14 @@ class SelfAssessment extends Model
     public function questions()
     {
         return $this->hasMany(AssessmentQuestion::class);
+    }
+
+    /**
+     * Get the category for the self-assessment.
+     */
+    public function category()
+    {
+        return $this->belongsTo(SelfAssessmentCategory::class, 'self_assessment_category_id');
     }
 
     /**

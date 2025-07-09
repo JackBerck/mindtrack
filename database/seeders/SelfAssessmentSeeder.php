@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\SelfAssessment;
+use App\Models\SelfAssessmentCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,22 +14,47 @@ class SelfAssessmentSeeder extends Seeder
      */
     public function run(): void
     {
+        $assessmentCategories = [
+            ['name' => 'Kesehatan Mental'],
+            ['name' => 'Emosional'],
+            ['name' => 'Gaya Hidup'],
+            ['name' => 'Pengembangan Diri'],
+            ['name' => 'Sosial'],
+        ];
+
+        foreach ($assessmentCategories as $category) {
+            SelfAssessmentCategory::create($category);
+        }
+
+
         $assessments = [
             [
                 'title' => 'Tes Kesehatan Mental',
                 'description' => 'Penilaian untuk mengukur kesehatan mental Anda.',
+                'difficulty' => 'mudah',
+                'tags' => ['mental', 'wellbeing'],
+                'self_assessment_category_id' => 1,
             ],
             [
                 'title' => 'Tes Tingkat Stres',
                 'description' => 'Penilaian untuk mengukur tingkat stres Anda.',
+                'difficulty' => 'mudah',
+                'tags' => ['stress', 'daily-life'],
+                'self_assessment_category_id' => 2,
             ],
             [
                 'title' => 'Tes Kecemasan',
                 'description' => 'Penilaian untuk mengukur tingkat kecemasan dan kekhawatiran Anda.',
+                'difficulty' => 'sedang',
+                'tags' => ['anxiety', 'mental-health'],
+                'self_assessment_category_id' => 1,
             ],
             [
                 'title' => 'Tes Depresi',
                 'description' => 'Penilaian untuk mengidentifikasi gejala depresi.',
+                'difficulty' => 'sulit',
+                'tags' => ['depression', 'mental-health'],
+                'self_assessment_category_id' => 1,
             ],
         ];
 
@@ -51,7 +77,7 @@ class SelfAssessmentSeeder extends Seeder
                 'self_assessment_id' => 1,
                 'question' => 'Saya merasa mudah tersinggung atau marah.',
             ],
-            
+
             // Questions for Tes Tingkat Stres (ID: 2)
             [
                 'self_assessment_id' => 2,
@@ -65,7 +91,7 @@ class SelfAssessmentSeeder extends Seeder
                 'self_assessment_id' => 2,
                 'question' => 'Saya sering merasa lelah meskipun sudah beristirahat.',
             ],
-            
+
             // Questions for Tes Kecemasan (ID: 3)
             [
                 'self_assessment_id' => 3,
@@ -75,7 +101,7 @@ class SelfAssessmentSeeder extends Seeder
                 'self_assessment_id' => 3,
                 'question' => 'Saya mengalami gejala fisik seperti jantung berdebar saat cemas.',
             ],
-            
+
             // Questions for Tes Depresi (ID: 4)
             [
                 'self_assessment_id' => 4,

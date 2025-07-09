@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('difficulty'); // Difficulty level (e.g., easy, medium, hard)
+            $table->json('tags'); // JSON array of questions
+            $table->foreignId('self_assessment_category_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
